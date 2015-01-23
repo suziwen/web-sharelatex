@@ -91,8 +91,9 @@ define [
 						#				flashControls()
 				
 				scope.$on "loaded", () ->
-					scope.loading = false
-					delete scope.progress
+					$timeout () ->
+						scope.loading = false
+						delete scope.progress
 
 				#scope.$watch "highlights", (areas) ->
 					# console.log 'got HIGHLIGHTS in pdfJS', areas
@@ -155,8 +156,12 @@ define [
 
 				scope.$on 'progress', (event, progress) ->
 					scope.$apply () ->
-						#console.log 'progress', progress.loaded, progress.total, progress
 						scope.progress = Math.floor(progress.loaded/progress.total*100)
+						scope.progress = 100 if scope.progress > 100
+						scope.progress = 0 if scope.progress < 0
+
+				scope.$on '$destroy', () ->
+					# console.log 'pdfjs destroy event'
 
 			template: """
 				<div data-pdf-viewer class="pdfjs-viewer" pdf-src='pdfSrc' position='position' scale='scale' highlights='highlights' please-jump-to='pleaseJumpTo'></div>
