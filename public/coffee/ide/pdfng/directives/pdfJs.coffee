@@ -63,10 +63,11 @@ define [
 						$.localStorage "pdf.position.#{attrs.key}", scope.position
 
 				flashControls = () ->
-					scope.flashControls = true
-					$timeout () ->
-						scope.flashControls = false
-					, 1000
+					scope.$evalAsync () ->
+						scope.flashControls = true
+						$timeout () ->
+							scope.flashControls = false
+						, 1000
 
 				scope.$on 'pdfDoubleClick', (event, e) ->
 					scope.dblClickCallback?(page: e.page - 1, offset: { top: e.y, left: e.x })
