@@ -171,13 +171,11 @@ define [
 			$scope.ui.pdfLayout = 'flat'
 			$scope.ui.view = 'pdf'
 			$.localStorage "pdf.layout", "flat"
-			$scope.$broadcast 'layout:pdf:view', $scope.ui
 			
 		$scope.switchToSideBySideLayout = () ->
 			$scope.ui.pdfLayout = 'sideBySide'
 			$scope.ui.view = 'editor'
 			$.localStorage "pdf.layout", "split"
-			$scope.$broadcast 'layout:pdf:view', $scope.ui
 			
 		if pdfLayout = $.localStorage("pdf.layout")
 			$scope.switchToSideBySideLayout() if pdfLayout == "split"
